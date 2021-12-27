@@ -1,10 +1,6 @@
 import React from "react";
-import Button from "./components/Button/Button";
+import RoutesPage from "./routes";
 
-function App() {
-  return <div className="App">
-    <Button>Comprar</Button>
-  </div>;
-}
+const App = () => <RoutesPage/>
 
 export default App;
