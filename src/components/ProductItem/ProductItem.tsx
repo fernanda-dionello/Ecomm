@@ -5,7 +5,7 @@ type ProductItemProps = { productItem: ProductItemType };
 const ProductItem: React.FC<ProductItemProps> = (prop: ProductItemProps) => {
   return (
     <div>
-      <span>{prop.productItem.title}</span>
+      <span role="contentinfo">{prop.productItem.title}</span>
       <img alt={prop.productItem.title} src={prop.productItem.image} />
     </div>
   );
