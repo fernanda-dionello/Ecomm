@@ -1,8 +1,9 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { cleanup, render, screen } from "@testing-library/react";
 import ProductItem from "./ProductItem";
 import faker from "faker";
 import { ProductItemType } from "./types/product-item";
+import { priceToBRL } from "../../pipes/price-to-brl";
 
 describe("ProductItem tests", () => {
   const Product: ProductItemType = {
@@ -20,6 +21,10 @@ describe("ProductItem tests", () => {
     const { container } = render(<ProductItem productItem={Product} />);
     componentInstance = container;
   });
+
+  afterEach(() => {
+    cleanup();
+  })
 
   test("should render a ProductItem", () => {
     expect(componentInstance).toBeDefined();
@@ -43,7 +48,8 @@ describe("ProductItem tests", () => {
     expect(screen.getByText(Product.description)).toBeInTheDocument();
   });
 
-  test("should have a product price", () => {
-    expect(screen.getByText(Product.price)).toBeInTheDocument();
+  test("should show price type as a number", () => {
+    const price = componentInstance.querySelector(".price");
+    expect(price?.textContent).toBe(priceToBRL(Product.price));
   });
 });
