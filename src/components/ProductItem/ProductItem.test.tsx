@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import ProductItem from "./ProductItem";
-import faker, { image } from "faker";
+import faker from "faker";
 import { ProductItemType } from "./types/product-item";
 
 describe("ProductItem tests", () => {
@@ -35,6 +35,7 @@ describe("ProductItem tests", () => {
   });
 
   test("should have a product title", () => {
-    expect(screen.getByText(Product.title)).toBeInTheDocument();
+    const spanTag = screen.getByRole("contentinfo") as HTMLSpanElement;
+    expect(spanTag.textContent).toBe(Product.title);
   });
 });
