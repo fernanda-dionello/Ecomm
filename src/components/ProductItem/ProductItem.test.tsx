@@ -38,4 +38,12 @@ describe("ProductItem tests", () => {
     const spanTag = screen.getByRole("contentinfo") as HTMLSpanElement;
     expect(spanTag.textContent).toBe(Product.title);
   });
+
+  test("should have a product description", () => {
+    expect(screen.getByText(Product.description)).toBeInTheDocument();
+  });
+
+  test("should have a product price", () => {
+    expect(screen.getByText(Product.price)).toBeInTheDocument();
+  });
 });
