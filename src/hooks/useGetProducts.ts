@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import { apiUrl } from "../api/apiUrl";
 import { ProductItemType } from "../components/ProductItem/types/product-item";
 
 const useGetProducts = () => {
-  const getProducts = () => {
-    return fetch("https://fakestoreapi.com/products?limit=5").then((res) =>
+  const [limit, setLimit] = useState(5);
+  const getProducts = useCallback(() => {
+    return fetch(`${apiUrl}/products?limit=${limit}`).then((res) =>
       res.json()
     );
-  };
-  return { getProducts };
+  }, [limit]);
+  return { getProducts, setLimit };
 };
 
 export default useGetProducts;

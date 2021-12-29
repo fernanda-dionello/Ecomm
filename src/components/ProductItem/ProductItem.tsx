@@ -10,10 +10,10 @@ type ProductItemProps = { productItem: ProductItemType };
 const ProductItem: React.FC<ProductItemProps> = (prop: ProductItemProps) => {
   return (
     <li className={css`${container()}`}>
-      <img alt={prop.productItem.title} src={prop.productItem.image} />
-      <span role="contentinfo">{prop.productItem.title}</span>
-      <p className="description">{prop.productItem.description}</p>
-      <span className="price">{priceToBRL(prop.productItem.price)}</span>
+      <img alt={prop.productItem?.title} src={prop.productItem?.image} />
+      <span role="contentinfo">{prop.productItem?.title}</span>
+      <p className="description">{prop.productItem?.description}</p>
+      <span className="price">{priceToBRL(prop.productItem?.price)}</span>
       <Button>Comprar</Button>
     </li>
   );
