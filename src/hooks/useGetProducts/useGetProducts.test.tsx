@@ -1,4 +1,3 @@
-import React from "react";
 import fetchMock from "jest-fetch-mock";
 import useGetProducts from "./useGetProducts";
 import { ProductItemType } from "../../components/ProductItem/types/product-item";
@@ -29,7 +28,7 @@ describe("useGetProducts hook tests", () => {
 
   test("should call the correct router to list the products", async () => {
     const { result } = renderHook(() => useGetProducts());
-    const { getProducts } = result.current; 
+    const { getProducts } = result.current;
     fetchMock.mockResponseOnce(JSON.stringify({}));
     await getProducts();
 
@@ -47,14 +46,12 @@ describe("useGetProducts hook tests", () => {
     expect(products).toEqual(productList);
   });
 
-  test.only("should update limit of url", async() => {
+  test("should update limit of url", async() => {
     const { result } = renderHook(() => useGetProducts(10));
-    const { getProducts, updateLimit} = result.current;
     fetchMock.mockResponseOnce(JSON.stringify({}));
-    act(() => updateLimit(2));
-    await getProducts();
-    
-    expect(result.current.limit).toBe(2);
-    // expect(fetch).toHaveBeenCalledWith(`${apiUrl}/products?limit=2`)
+    act(() => result.current.setLimit(2));
+    await result.current.getProducts();
+
+    expect(fetch).toHaveBeenCalledWith(`${apiUrl}/products?limit=2`);
   });
 });
