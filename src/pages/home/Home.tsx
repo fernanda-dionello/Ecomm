@@ -1,28 +1,30 @@
 import { css } from "@emotion/css";
 import faker from "faker";
-import React from "react"
+import React, { useEffect, useState } from "react";
 import ProductItem from "../../components/ProductItem/ProductItem";
 import { ProductItemType } from "../../components/ProductItem/types/product-item";
 import { container } from "./home-styles";
+import useGetProducts from "../../hooks/useGetProducts/useGetProducts";
 
 const Home: React.FC = () => {
-    const Product: ProductItemType = {
-        id: faker.datatype.number(),
-        category: faker.commerce.productAdjective(),
-        image: faker.image.imageUrl(),
-        title: faker.commerce.productName(),
-        description: faker.commerce.productDescription(),
-        price: faker.datatype.number(),
-    };
+  const { getProducts } = useGetProducts();
+  const [products, setProducts] = useState<ProductItemType[]>([]);
 
-    return (
-        <div className={css`${container()}`}>
-            <ProductItem productItem={Product} />
-            <ProductItem productItem={Product} />
-            <ProductItem productItem={Product} />
-            <ProductItem productItem={Product} />
-        </div>
-    );
-}
+  useEffect(() => {
+    getProducts().then(setProducts);
+  }, []);
+
+  return (
+    <ul
+      className={css`
+        ${container()}
+      `}
+    >
+      {products.map((product, index) => (
+        <ProductItem productItem={product} key={index} />
+      ))}
+    </ul>
+  );
+};
 
 export default Home;
