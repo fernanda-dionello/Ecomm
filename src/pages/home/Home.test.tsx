@@ -1,4 +1,4 @@
-import { act, cleanup, render } from "@testing-library/react";
+import { cleanup, render, waitFor } from "@testing-library/react";
 import faker from "faker";
 import fetchMock from "jest-fetch-mock";
 import { ProductItemType } from "../../components/ProductItem/types/product-item";
@@ -18,14 +18,10 @@ describe("Home tests", () => {
     };
   });
 
-  let componentInstance: HTMLElement;
-
   beforeEach(() => {
     (useGetProducts as jest.Mock).mockReturnValue({
       getProducts: () => Promise.resolve(productList),
     });
-    const { container } = render(<Home />);
-    componentInstance = container;
     fetchMock.resetMocks();
   });
 
@@ -33,10 +29,9 @@ describe("Home tests", () => {
     cleanup();
   });
   test("should render product list", async () => {
-    const productListHome = Array.from(
-      componentInstance.querySelectorAll("ul li")
-    ) as HTMLElement[];
+    const { container } = await waitFor(() => render(<Home />));
 
-    expect(await productListHome).toHaveLength(4);
+    const productListHome = Array.from(container.querySelectorAll("ul li")) as HTMLElement[];
+    expect(productListHome).toHaveLength(4);
   });
 });
