@@ -28,10 +28,11 @@ describe("Home tests", () => {
   afterEach(() => {
     cleanup();
   });
-  test("should render product list", async () => {
-    const { container } = await waitFor(() => render(<Home />));
-
-    const productListHome = Array.from(container.querySelectorAll("ul li")) as HTMLElement[];
-    expect(productListHome).toHaveLength(4);
+  test.only("should render product list", async () => {
+    const { container } = render(<Home />);
+    await waitFor(() => {
+      const productListHome = Array.from(container.querySelectorAll("ul li")) as HTMLElement[];
+      expect(productListHome).toHaveLength(4);
+    });
   });
 });
